@@ -1,0 +1,43 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Time log for day {{this.selectedDay}}
+                </div>
+                <div class="card-body">
+                    <div *ngIf="loading">
+                        <i class="fa fa-spinner fa-lg mt-4"></i>
+                    </div>
+                    <table class="table" *ngIf="!loading">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Logged in</th>
+                                <th>Logged out</th>
+                                <th>Time played</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let playerTime of times">
+                                <td>{{playerTime.player}}</td>
+                                <td>{{playerTime.startTime}}</td>
+                                <td>{{playerTime.endTime}}</td>
+                                <td>
+                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li *ngFor="let day of days" class="page-item" [ngClass]="{ 'active':day===selectedDay}">
+                            <a class="page-link" (click)="getPlayerTimesHistorical(day)">{{day}}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

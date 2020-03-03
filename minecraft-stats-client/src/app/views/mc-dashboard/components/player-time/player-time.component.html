@@ -1,0 +1,34 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Time log
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Logged in</th>
+                                <th>Logged out</th>
+                                <th>Time played</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let playerTime of times">
+                                <td>{{playerTime.player}}</td>
+                                <td>{{playerTime.startTime}}</td>
+                                <td>{{playerTime.endTime}}</td>
+                                <td>
+                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
