@@ -10,22 +10,31 @@ export class HistoricalPlayerTimeComponent implements OnInit {
   public user: any;
   times = [];
   public selectedDay: string;
-  public days = ['2020-02-27', '2020-02-28', '2020-03-01', '2020-03-02'];
+  public days;
   public loading = false;
+  public daySelectorIndex = -1;
+  public daySelectorOffset = 5;
   constructor(public mcApi: McApiService) {
-    this.getPlayerTimesHistorical(this.days[0]);
+    this.getHistoricalDays();
   }
 
   ngOnInit(): void {
   }
 
+  private getHistoricalDays() {
+    return this.mcApi.getPlayersHistoricalDays().subscribe( (res: string[]) => {
+      this.days = res;
+      this.selectedDay = this.days[this.days.length - 2];
+      this.getPlayerTimesHistorical(this.days[this.days.length - 2]);
+    } );
+  }
+
   public getPlayerTimesHistorical(date) {
     this.selectedDay = date;
-    this.times = [];
     this.loading = true;
     return this.mcApi.getPlayersTime(date).subscribe( (res: any) => {
       res = JSON.parse(res);
-      console.log(res)
+      this.times = [];
       // tslint:disable-next-line:forin
       for (const key in res.users) {
         this.times.push({
@@ -35,9 +44,20 @@ export class HistoricalPlayerTimeComponent implements OnInit {
           delta: res.delta[key]
         });
       }
-      console.log(this.times);
       this.loading = false;
     });
+  }
+
+  public prevDay() {
+    if (this.daySelectorIndex > this.days.length * -1 + this.daySelectorOffset) {
+      this.daySelectorIndex--;
+    }
+  }
+
+  public nextDay() {
+    if (this.daySelectorIndex < -1) {
+      this.daySelectorIndex++;
+    }
   }
 
 }

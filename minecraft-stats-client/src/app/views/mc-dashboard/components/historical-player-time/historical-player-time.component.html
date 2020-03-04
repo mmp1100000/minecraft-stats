@@ -5,11 +5,8 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Time log for day {{this.selectedDay}}
                 </div>
-                <div class="card-body">
-                    <div *ngIf="loading">
-                        <i class="fa fa-spinner fa-lg mt-4"></i>
-                    </div>
-                    <table class="table" *ngIf="!loading">
+                <div class="card-body text-center">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Username</th>
@@ -18,7 +15,7 @@
                                 <th>Time played</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="!loading">
                             <tr *ngFor="let playerTime of times">
                                 <td>{{playerTime.player}}</td>
                                 <td>{{playerTime.startTime}}</td>
@@ -30,11 +27,15 @@
 
                         </tbody>
                     </table>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                        <li *ngFor="let day of days" class="page-item" [ngClass]="{ 'active':day===selectedDay}">
+                    <h5 *ngIf="times.length === 0 && !loading" class="pt-2 pb-4"><span class="badge badge-pill badge-primary ">No one played this day</span></h5>
+                    <div *ngIf="loading" class="justify-content-center mt-0 pb-4">
+                        <i class="fa fa-spinner fa-lg mt-4"></i>
+                    </div>
+                    <ul class="pagination justify-content-center" *ngIf="days">
+                        <li class="page-item" [ngClass]="{'disabled':this.daySelectorIndex === this.days.length * -1 + this.daySelectorOffset}"><a class="page-link" (click)="prevDay()">Prev</a></li>
+                        <li *ngFor="let day of days | slice:daySelectorIndex-daySelectorOffset:daySelectorIndex" class="page-item" [ngClass]="{ 'active':day===selectedDay}">
                             <a class="page-link" (click)="getPlayerTimesHistorical(day)">{{day}}</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item" [ngClass]="{'disabled':daySelectorIndex===-1}"><a class="page-link" (click)="nextDay()">Next</a></li>
                     </ul>
                 </div>
             </div>
