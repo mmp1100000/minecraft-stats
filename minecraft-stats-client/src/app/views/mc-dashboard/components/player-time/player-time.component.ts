@@ -20,7 +20,6 @@ export class PlayerTimeComponent implements OnInit {
   private getPlayerTimesDelta() {
     return this.mcApi.getPlayersTimeCurrent().subscribe( (res: any) => {
       res = JSON.parse(res);
-      console.log(res)
       // tslint:disable-next-line:forin
       for (const key in res.users) {
         this.times.push({
@@ -30,7 +29,6 @@ export class PlayerTimeComponent implements OnInit {
           delta: res.delta[key]
         });
       }
-      console.log(this.times);
     });
   }
 }
