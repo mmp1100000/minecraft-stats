@@ -40,7 +40,6 @@ class PlayerTime:
         users = []
         start_time = []
         end_time = []
-        log_reads = []
 
         conn = FtpConnection()
 
@@ -76,6 +75,13 @@ class PlayerTime:
         time_df['start_time'] = pd.to_datetime(time_df['start_time'], format='%H:%M:%S').dt.time
         time_df['end_time'] = pd.to_datetime(time_df['end_time'], format='%H:%M:%S').dt.time
         return time_df
+
+    def get_player_days(self):
+        conn = FtpConnection()
+        dates = conn.ftp_get_dir_files('logs/')
+        dates_mod = ["-".join(day.split("-", 3)[:3]) for day in dates] # Split and obtain only the dates
+        dates_mod.remove('latest.log')
+        return sorted(set(dates_mod))
 
     def __players_time_df_to_unique_rows(self, time_df):
         """

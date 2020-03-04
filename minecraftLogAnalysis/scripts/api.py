@@ -16,6 +16,12 @@ class PlayersTimeHistoricalReq(Resource):
         return pt.player_times(date)
 
 
+class PlayersTimeHistoricalAvalibleDays(Resource):
+    def get(self):
+        pt = PlayerTime()
+        return pt.get_player_days()
+
+
 class PlayersTimeHistoricalGroupedReq(Resource):
     def get(self, date):
         pt = PlayerTime()
@@ -41,6 +47,8 @@ api.add_resource(PlayersTimeHistoricalGroupedReq, '/api/players/time/grouped/<da
 api.add_resource(PlayersTimeGetCurrentReq, '/api/players/time/current')
 
 api.add_resource(PlayerStatsReq, '/api/players/stats/<player_name>')
+
+api.add_resource(PlayersTimeHistoricalAvalibleDays, '/api/players/days')
 
 if __name__ == '__main__':
     app.run(debug=True)

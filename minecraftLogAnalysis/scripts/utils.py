@@ -57,6 +57,18 @@ class FtpConnection:
         with open(destination_file_path, 'wb') as fp:
             self.ftp.retrbinary('RETR ' + source_file_path, fp.write)
 
+    def ftp_get_dir_files(self, file_path):
+        files = []
+        self.ftp.cwd(file_path)
+        try:
+            files = self.ftp.nlst()
+        except ftplib.error_perm as resp:
+            if str(resp) == "550 No files found":
+                print('No files found')
+            else:
+                raise
+        return files
+
 
 def read_gz_text_file(file_path):
     f = gzip.open(file_path, 'rt')
