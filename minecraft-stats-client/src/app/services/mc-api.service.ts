@@ -15,6 +15,11 @@ export class McApiService {
   getPlayersTimeCurrent() {
     return this.http.get(`${this.hostPrefix}/players/time/current`);
   }
+
+  getPlayersHistoricalDays() {
+    return this.http.get(`${this.hostPrefix}/players/days`)
+  }
+
   msToTime(duration) {
     // tslint:disable-next-line:prefer-const
     let milliseconds = parseInt(String((duration % 1000) / 100))
