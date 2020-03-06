@@ -14,9 +14,12 @@ export class HistoricalPlayerTimeComponent implements OnInit {
   public loading = false;
   public daySelectorIndex = -1;
   public daySelectorOffset = 5;
+  public groupingChecked = true;
   constructor(public mcApi: McApiService) {
     this.getHistoricalDays();
   }
+
+  private dataFunction: any;
 
   ngOnInit(): void {
   }
@@ -32,17 +35,28 @@ export class HistoricalPlayerTimeComponent implements OnInit {
   public getPlayerTimesHistorical(date) {
     this.selectedDay = date;
     this.loading = true;
-    return this.mcApi.getPlayersTime(date).subscribe( (res: any) => {
+    return this.getDataFunction(date).subscribe( (res: any) => {
       res = JSON.parse(res);
       this.times = [];
-      // tslint:disable-next-line:forin
-      for (const key in res.users) {
-        this.times.push({
-          player: res.users[key],
-          startTime: res.start_time[key],
-          endTime: res.end_time[key],
-          delta: res.delta[key]
-        });
+      if (this.groupingChecked === true) {
+        console.log(res);
+        // tslint:disable-next-line: forin
+        for (const key in res.delta) {
+          this.times.push({
+            player: key,
+            delta: res.delta[key]
+          });
+        }
+      } else {
+        // tslint:disable-next-line: forin
+        for (const key in res.users) {
+          this.times.push({
+            player: res.users[key],
+            startTime: res.start_time[key],
+            endTime: res.end_time[key],
+            delta: res.delta[key]
+          });
+        }
       }
       this.loading = false;
     });
@@ -57,6 +71,20 @@ export class HistoricalPlayerTimeComponent implements OnInit {
   public nextDay() {
     if (this.daySelectorIndex < -1) {
       this.daySelectorIndex++;
+    }
+  }
+
+  public changeGrouping(event) {
+    this.groupingChecked = event.currentTarget.checked;
+    this.getPlayerTimesHistorical(this.selectedDay);
+  }
+
+
+  private getDataFunction(date) {
+    if (this.groupingChecked === true ) {
+      return this.mcApi.getPlayersTimeGrouped(date);
+    } else {
+      return this.mcApi.getPlayersTime(date);
     }
   }
 

@@ -123,6 +123,7 @@ class PlayerTime:
         return time_sorted_df
 
     def __players_time_df_group(self, time_sorted_df):
+        print(time_sorted_df.groupby(['users']).sum())
         return time_sorted_df.groupby(['users']).sum()
 
     def __players_time_current(self):

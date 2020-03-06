@@ -4,9 +4,13 @@
             <div class="card">
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Time log for day {{this.selectedDay}}
+                    <label class="switch switch-sm switch-label switch-pill switch-primary">
+                        <input type="checkbox" (change)="changeGrouping($event)" class="switch-input" checked>
+                        <span class="switch-slider" data-checked="Sum" data-unchecked=""></span>
+                      </label>
                 </div>
                 <div class="card-body text-center">
-                    <table class="table">
+                    <table class="table" *ngIf="!groupingChecked">
                         <thead>
                             <tr>
                                 <th>Username</th>
@@ -27,6 +31,26 @@
 
                         </tbody>
                     </table>
+
+                    <table class="table" *ngIf="groupingChecked">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Delta</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="!loading">
+                            <tr *ngFor="let playerTime of times">
+                                <td>{{playerTime.player}}</td>
+                                <td>
+                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
                     <h5 *ngIf="times.length === 0 && !loading" class="pt-2 pb-4"><span class="badge badge-pill badge-primary ">No one played this day</span></h5>
                     <div *ngIf="loading" class="justify-content-center mt-0 pb-4">
                         <i class="fa fa-spinner fa-lg mt-4"></i>
