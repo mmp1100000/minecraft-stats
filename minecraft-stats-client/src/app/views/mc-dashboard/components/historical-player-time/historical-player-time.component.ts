@@ -27,6 +27,7 @@ export class HistoricalPlayerTimeComponent implements OnInit {
   private getHistoricalDays() {
     return this.mcApi.getPlayersHistoricalDays().subscribe( (res: string[]) => {
       this.days = res;
+      this.days.push('');
       this.selectedDay = this.days[this.days.length - 2];
       this.getPlayerTimesHistorical(this.days[this.days.length - 2]);
     } );

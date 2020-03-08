@@ -59,7 +59,8 @@
                         <li class="page-item" [ngClass]="{'disabled':this.daySelectorIndex === this.days.length * -1 + this.daySelectorOffset}"><a class="page-link" (click)="prevDay()">Prev</a></li>
                         <li *ngFor="let day of days | slice:daySelectorIndex-daySelectorOffset:daySelectorIndex" class="page-item" [ngClass]="{ 'active':day===selectedDay}">
                             <a class="page-link" (click)="getPlayerTimesHistorical(day)">{{day}}</a></li>
-                        <li class="page-item" [ngClass]="{'disabled':daySelectorIndex===-1}"><a class="page-link" (click)="nextDay()">Next</a></li>
+                        <li class="page-item">
+                            <li class="page-item" [ngClass]="{'disabled':daySelectorIndex===-1}"><a class="page-link" (click)="nextDay()">Next</a></li>
                     </ul>
                 </div>
             </div>
