@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb61696f-8f7d-412c-b437-e6284782cddd" name="Default Changelist" comment="" />
+    <list default="true" id="fb61696f-8f7d-412c-b437-e6284782cddd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../minecraft-stats-client/src/app/services/mc-api.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../minecraft-stats-client/src/app/services/mc-api.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-02-19-5.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-02-22-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-02-27-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-02-28-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-03-01-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/data/2020-03-02-1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/player_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/player_time.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/utils.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +27,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="JupyterTrust" id="2282f4e4-37e1-463e-ab46-95fa67c3efa0">
     <option name="files">
@@ -39,7 +55,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.api">
     <configuration name="api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="minecraftLogAnalysis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -62,9 +78,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="minecraftLogAnalysis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/tests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.api" />
+        <item itemvalue="Python.tests" />
       </list>
     </recent_temporary>
   </component>
@@ -102,25 +140,29 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1494" height="298" key="GridCell.Tab.0.bottom" timestamp="1583266224978">
+    <state x="232" y="142" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583619149103">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="298" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1583266224978" />
+    <state x="232" y="142" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.960@0.0.1536.960" timestamp="1583619149103" />
+    <state width="1515" height="269" key="GridCell.Tab.0.bottom" timestamp="1583622764655">
+      <screen x="0" y="0" width="1536" height="960" />
+    </state>
+    <state width="1515" height="269" key="GridCell.Tab.0.bottom/0.0.1536.960@0.0.1536.960" timestamp="1583622764655" />
     <state width="1750" height="298" key="GridCell.Tab.0.bottom/0.0.1792.1120/-1920.-545.1920.1080@0.0.1792.1120" timestamp="1582473713457" />
-    <state width="1494" height="298" key="GridCell.Tab.0.center" timestamp="1583266224974">
+    <state width="1515" height="269" key="GridCell.Tab.0.center" timestamp="1583622764654">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="298" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1583266224974" />
+    <state width="1515" height="269" key="GridCell.Tab.0.center/0.0.1536.960@0.0.1536.960" timestamp="1583622764654" />
     <state width="1750" height="298" key="GridCell.Tab.0.center/0.0.1792.1120/-1920.-545.1920.1080@0.0.1792.1120" timestamp="1582473713456" />
-    <state width="1494" height="298" key="GridCell.Tab.0.left" timestamp="1583266224974">
+    <state width="1515" height="269" key="GridCell.Tab.0.left" timestamp="1583622764653">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="298" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1583266224974" />
+    <state width="1515" height="269" key="GridCell.Tab.0.left/0.0.1536.960@0.0.1536.960" timestamp="1583622764653" />
     <state width="1750" height="298" key="GridCell.Tab.0.left/0.0.1792.1120/-1920.-545.1920.1080@0.0.1792.1120" timestamp="1582473713455" />
-    <state width="1494" height="298" key="GridCell.Tab.0.right" timestamp="1583266224975">
+    <state width="1515" height="269" key="GridCell.Tab.0.right" timestamp="1583622764654">
       <screen x="0" y="0" width="1536" height="960" />
     </state>
-    <state width="1494" height="298" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1583266224975" />
+    <state width="1515" height="269" key="GridCell.Tab.0.right/0.0.1536.960@0.0.1536.960" timestamp="1583622764654" />
     <state width="1750" height="298" key="GridCell.Tab.0.right/0.0.1792.1120/-1920.-545.1920.1080@0.0.1792.1120" timestamp="1582473713456" />
     <state width="1748" height="372" key="GridCell.Tab.1.bottom" timestamp="1582233937379">
       <screen x="0" y="0" width="1792" height="1120" />
@@ -146,8 +188,5 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/0.0.1792.1120/-1920.-545.1920.1080@0.0.1792.1120" timestamp="1582453419613" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/minecraftLogAnalysis$api.coverage" NAME="api Coverage Results" MODIFIED="1583263997154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
 </project>
