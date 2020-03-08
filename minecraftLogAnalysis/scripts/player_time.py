@@ -1,3 +1,4 @@
+import os
 import re
 
 import pandas as pd
@@ -36,15 +37,19 @@ class PlayerTime:
         :param date_string:
         :return:
         """
-        LOGPATHS = [date_string + '-1.log.gz']
+
         users = []
         start_time = []
         end_time = []
 
         conn = FtpConnection()
 
-        for log_file in LOGPATHS:
-            conn.ftp_get_binary_file('logs/' + log_file, 'data/' + log_file)
+        files_list = conn.ftp_get_dir_files('/logs')
+        logpaths = [day for day in files_list if date_string in day]
+
+        for log_file in logpaths:
+            if not os.path.isfile('data/' + log_file):
+                conn.ftp_get_binary_file(log_file, 'data/' + log_file)
             log = read_gz_text_file('data/' + log_file)
             for line in log:
                 entry = line.split(' ')
@@ -123,7 +128,6 @@ class PlayerTime:
         return time_sorted_df
 
     def __players_time_df_group(self, time_sorted_df):
-        print(time_sorted_df.groupby(['users']).sum())
         return time_sorted_df.groupby(['users']).sum()
 
     def __players_time_current(self):
