@@ -11,7 +11,7 @@ default_connection_settings = {
 
 class FtpConnection:
     def __init__(self, connection=None):
-        ftplib.FTP.maxline = 16384
+        ftplib.FTP.maxline = 163840
         if connection is None:
             self.connection = default_connection_settings
         else:
