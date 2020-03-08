@@ -17,7 +17,15 @@ export class McApiService {
   }
 
   getPlayersHistoricalDays() {
-    return this.http.get(`${this.hostPrefix}/players/days`)
+    return this.http.get(`${this.hostPrefix}/players/days`);
+  }
+
+  getPlayersTimeGrouped(day: string) {
+    return this.http.get(`${this.hostPrefix}/players/time/grouped/${day}`);
+  }
+
+  getPlayerStats(playerName: string) {
+    return this.http.get(`${this.hostPrefix}/players/stats/${playerName}`);
   }
 
   msToTime(duration) {
