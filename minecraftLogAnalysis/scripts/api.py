@@ -25,7 +25,7 @@ class PlayersTimeHistoricalAvalibleDays(Resource):
 class PlayersTimeHistoricalGroupedReq(Resource):
     def get(self, date):
         pt = PlayerTime()
-        return pt.player_times_grouped(date)
+        return pt.player_times_grouped(date, 1)
 
 
 class PlayersTimeGetCurrentReq(Resource):

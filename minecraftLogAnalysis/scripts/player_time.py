@@ -9,15 +9,19 @@ from scripts.utils import FtpConnection, read_gz_text_file
 
 
 class PlayerTime:
+    # Constructor
+
     def __init__(self):
         pass
 
-    def player_times_grouped(self, date_string):
+    # Public methods
+
+    def player_times_grouped(self, date_string, previous):
         return \
             self.__players_time_df_group(
                 self.__players_time_df_to_delta_df(
                     self.__players_time_df_to_unique_rows(
-                        self.__get_players_time_df_historical(date_string)))).to_json()
+                        self.__get_players_time_df_historical(date_string, previous)))).to_json()
 
     def player_times(self, date_string):
         return \
@@ -31,12 +35,9 @@ class PlayerTime:
                 self.__players_time_df_to_unique_rows(
                     self.__players_time_current())).to_json()
 
-    def __get_players_time_df_historical(self, date_string):
-        """
+    # Private methods
 
-        :param date_string:
-        :return:
-        """
+    def __get_players_time_df_historical(self, date_string, previous):
 
         users = []
         start_time = []
@@ -45,7 +46,13 @@ class PlayerTime:
         conn = FtpConnection()
 
         files_list = conn.ftp_get_dir_files('/logs')
-        logpaths = [day for day in files_list if date_string in day]
+        logpaths = []
+        available_days = self.get_player_days()
+        date_index = available_days.index(date_string)+1
+        for date_string in available_days[date_index-previous:date_index]:
+            logpaths = logpaths + [day for day in files_list if date_string in day]
+
+        print(logpaths)
 
         for log_file in logpaths:
             if not os.path.isfile('data/' + log_file):
