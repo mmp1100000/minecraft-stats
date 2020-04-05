@@ -3,8 +3,8 @@ import gzip
 import uuid
 
 default_connection_settings = {
-    'server_name': 'fr67.server.pro',
-    'server_user': '40448',
+    'server_name': 'gra-adv4-77.server.pro',
+    'server_user': '41873',
     'server_pass': '7qytnsJShBgo0qlf'
 }
 

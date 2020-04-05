@@ -23,11 +23,11 @@ class PlayerTime:
                     self.__players_time_df_to_unique_rows(
                         self.__get_players_time_df_historical(date_string, previous)))).to_json()
 
-    def player_times(self, date_string):
+    def player_times(self, date_string, previous):
         return \
             self.__players_time_df_to_delta_df(
                 self.__players_time_df_to_unique_rows(
-                    self.__get_players_time_df_historical(date_string))).to_json()
+                    self.__get_players_time_df_historical(date_string, previous))).to_json()
 
     def players_time_current(self):
         return \
@@ -60,12 +60,14 @@ class PlayerTime:
             log = read_gz_text_file('data/' + log_file)
             for line in log:
                 entry = line.split(' ')
-                if 'joined the game' in line:
-                    users.append(entry[3])
+                if ('joined the game' in line) or ('logged in' in line):
+                    user_name = line[line.find(']', line.find(' '))+3: line.find('[', line.find(']', line.find(' ')))]
+                    users.append(user_name)
                     start_time.append(re.sub("\[|\]", "", entry[0]))
                     end_time.append(None)
                 elif 'left the game' in line:
-                    users.append(entry[3])
+                    user_name = line[line.find(']', line.find(' ')) + 3: line.find(' left')]
+                    users.append(user_name)
                     end_time.append(re.sub("\[|\]", "", entry[0]))
                     start_time.append(None)
 

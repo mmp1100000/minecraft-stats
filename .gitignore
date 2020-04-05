@@ -5,3 +5,7 @@ minecraftLogAnalysis/.idea
 minecraftLogAnalysis/scripts/__pycache__
 minecraftLogAnalysis/scripts/data/*
 minecraftLogAnalysis/scripts/__pycache__
+minecraftLogAnalysis/.idea
+minecraftLogAnalysis/.vscode
+minecraftLogAnalysis/scripts/__pycache__
+.DS_Store

@@ -13,7 +13,7 @@ api = Api(app)
 class PlayersTimeHistoricalReq(Resource):
     def get(self, date):
         pt = PlayerTime()
-        return pt.player_times(date)
+        return pt.player_times(date, 1)
 
 
 class PlayersTimeHistoricalAvalibleDays(Resource):
