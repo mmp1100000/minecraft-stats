@@ -3,7 +3,7 @@ import re
 
 import pandas as pd
 from pandas._libs.tslibs.nattype import NaT
-from datetime import datetime, date
+from datetime import datetime, date, time
 
 from scripts.utils import FtpConnection, read_gz_text_file
 
@@ -35,6 +35,13 @@ class PlayerTime:
                 self.__players_time_df_to_unique_rows(
                     self.__players_time_current())).to_json()
 
+    def get_player_days(self):
+        conn = FtpConnection()
+        dates = conn.ftp_get_dir_files('logs/')
+        dates_mod = ["-".join(day.split("-", 3)[:3]) for day in dates]  # Split and obtain only the dates
+        dates_mod.remove('latest.log')
+        return sorted(set(dates_mod))
+
     # Private methods
 
     def __get_players_time_df_historical(self, date_string, previous):
@@ -48,8 +55,8 @@ class PlayerTime:
         files_list = conn.ftp_get_dir_files('/logs')
         logpaths = []
         available_days = self.get_player_days()
-        date_index = available_days.index(date_string)+1
-        for date_string in available_days[date_index-previous:date_index]:
+        date_index = available_days.index(date_string) + 1
+        for date_string in available_days[date_index - previous:date_index]:
             logpaths = logpaths + [day for day in files_list if date_string in day]
 
         print(logpaths)
@@ -61,14 +68,22 @@ class PlayerTime:
             for line in log:
                 entry = line.split(' ')
                 if ('joined the game' in line) or ('logged in' in line):
-                    user_name = line[line.find(']', line.find(' '))+3: line.find('[', line.find(']', line.find(' ')))]
+                    user_name = line[line.find(']', line.find(' ')) + 3: line.find('[', line.find(']', line.find(' ')))]
                     users.append(user_name)
-                    start_time.append(re.sub("\[|\]", "", entry[0]))
+                    start_time.append(
+                        datetime.combine(
+                            date.fromisoformat(log_file[0:10]),
+                            time.fromisoformat(re.sub("\[|\]", "", entry[0])))
+                    )
                     end_time.append(None)
                 elif 'left the game' in line:
                     user_name = line[line.find(']', line.find(' ')) + 3: line.find(' left')]
                     users.append(user_name)
-                    end_time.append(re.sub("\[|\]", "", entry[0]))
+                    end_time.append(
+                        datetime.combine(
+                            date.fromisoformat(log_file[0:10]),
+                            time.fromisoformat(re.sub("\[|\]", "", entry[0])))
+                    )
                     start_time.append(None)
 
         # %%
@@ -83,19 +98,19 @@ class PlayerTime:
         for user in time_df.users.unique():
             index = time_df[time_df['users'] == user].index.tolist()[-1]
             if time_df.iloc[index]['end_time'] is None:
-                user_close = {'users': user, 'start_time': None, 'end_time': '23:59:59'}
+                user_close = \
+                {
+                    'users': user,
+                    'start_time': None,
+                    'end_time': datetime.combine(
+                        time_df.iloc[index]['start_time'].date(),
+                        time.fromisoformat('23:59:59'))
+                }
                 time_df = time_df.append(user_close, ignore_index=True)
 
-        time_df['start_time'] = pd.to_datetime(time_df['start_time'], format='%H:%M:%S').dt.time
-        time_df['end_time'] = pd.to_datetime(time_df['end_time'], format='%H:%M:%S').dt.time
+        # time_df['start_time'] = pd.to_datetime(time_df['start_time'], format='%H:%M:%S').dt.time
+        # time_df['end_time'] = pd.to_datetime(time_df['end_time'], format='%H:%M:%S').dt.time
         return time_df
-
-    def get_player_days(self):
-        conn = FtpConnection()
-        dates = conn.ftp_get_dir_files('logs/')
-        dates_mod = ["-".join(day.split("-", 3)[:3]) for day in dates] # Split and obtain only the dates
-        dates_mod.remove('latest.log')
-        return sorted(set(dates_mod))
 
     def __players_time_df_to_unique_rows(self, time_df):
         """
@@ -132,11 +147,13 @@ class PlayerTime:
         :return:
         """
         for index, row in time_sorted_df.iterrows():
-            row['delta'] = datetime.combine(date.today(), row['end_time']) - datetime.combine(date.today(),
-                                                                                              row['start_time'])
+            timedelta_diff = row['end_time'] - row['start_time']
+            timedelta_diff_minutes = timedelta_diff.total_seconds()
+            time_sorted_df.at[index, 'delta'] = timedelta_diff_minutes
         return time_sorted_df
 
     def __players_time_df_group(self, time_sorted_df):
+        pd.set_option("display.max_rows", None, "display.max_columns", None)
         return time_sorted_df.groupby(['users']).sum()
 
     def __players_time_current(self):

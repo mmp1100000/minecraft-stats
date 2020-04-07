@@ -22,10 +22,10 @@
                         <tbody *ngIf="!loading">
                             <tr *ngFor="let playerTime of times">
                                 <td>{{playerTime.player}}</td>
-                                <td>{{playerTime.startTime}}</td>
-                                <td>{{playerTime.endTime}}</td>
+                                <td>{{playerTime.startTime | date:'HH:mm:ss':'UTC'}}</td>
+                                <td>{{playerTime.endTime | date:'HH:mm:ss':'UTC'}}</td>
                                 <td>
-                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                    <span class="badge badge-success">{{playerTime.delta * 1000 | date:'HH:mm:ss':'UTC'}}</span>
                                 </td>
                             </tr>
 
@@ -43,7 +43,7 @@
                             <tr *ngFor="let playerTime of times">
                                 <td>{{playerTime.player}}</td>
                                 <td>
-                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                    <span class="badge badge-success">{{playerTime.delta*1000 | date:'HH:mm:ss':'UTC'}}</span>
                                 </td>
                             </tr>
 

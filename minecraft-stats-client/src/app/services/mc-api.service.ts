@@ -29,6 +29,7 @@ export class McApiService {
   }
 
   msToTime(duration) {
+    console.log((duration / (1000 * 60 * 60)) % 24);
     // tslint:disable-next-line:prefer-const
     let milliseconds = parseInt(String((duration % 1000) / 100))
       , seconds: string | number = parseInt(String((duration / 1000) % 60))

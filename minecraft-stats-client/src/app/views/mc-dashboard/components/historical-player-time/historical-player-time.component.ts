@@ -53,8 +53,8 @@ export class HistoricalPlayerTimeComponent implements OnInit {
         for (const key in res.users) {
           this.times.push({
             player: res.users[key],
-            startTime: res.start_time[key],
-            endTime: res.end_time[key],
+            startTime: parseInt(res.start_time[key], 10),
+            endTime: parseInt(res.end_time[key], 10),
             delta: res.delta[key]
           });
         }
