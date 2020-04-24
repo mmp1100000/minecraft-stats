@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  flask_service:
+    container_name: flask_dev_container
+    restart: always
+    image: flask
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # depends_on:
+    #     - redis
+    ports:
+      - "5000:5000"
+    environment:
+        - FLASK_DEBUG=1

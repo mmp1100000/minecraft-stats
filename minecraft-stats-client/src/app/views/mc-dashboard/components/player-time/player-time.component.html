@@ -3,7 +3,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Time log
+                    <i class="fa fa-align-justify"></i> Time log for today
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -18,10 +18,10 @@
                         <tbody>
                             <tr *ngFor="let playerTime of times">
                                 <td>{{playerTime.player}}</td>
-                                <td>{{playerTime.startTime}}</td>
-                                <td>{{playerTime.endTime}}</td>
+                                <td>{{playerTime.startTime| date:'HH:mm:ss':'UTC'}}</td>
+                                <td>{{playerTime.endTime| date:'HH:mm:ss':'UTC'}}</td>
                                 <td>
-                                    <span class="badge badge-success">{{mcApi.msToTime(playerTime.delta)}}</span>
+                                    <span class="badge badge-success">{{playerTime.delta * 1000 | date:'HH:mm:ss':'UTC'}}</span>
                                 </td>
                             </tr>
 

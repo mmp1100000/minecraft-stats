@@ -1,3 +1,4 @@
+
 from flask import Flask
 from flask_restful import Resource, Api
 
@@ -6,38 +7,40 @@ from scripts.player_time import PlayerTime
 from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
+
+# CORS
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 class PlayersTimeHistoricalReq(Resource):
-    def get(self, date):
-        pt = PlayerTime()
-        return pt.player_times(date, 7)
+ def get(self, date):
+     pt = PlayerTime()
+     return pt.player_times(1, date)
 
 
 class PlayersTimeHistoricalAvalibleDays(Resource):
-    def get(self):
-        pt = PlayerTime()
-        return pt.get_player_days()
+ def get(self):
+     pt = PlayerTime()
+     return pt.get_player_days()
 
 
 class PlayersTimeHistoricalGroupedReq(Resource):
-    def get(self, date):
-        pt = PlayerTime()
-        return pt.player_times_grouped(date, 7)
+ def get(self, date):
+     pt = PlayerTime()
+     return pt.player_times_grouped(1, date)
 
 
 class PlayersTimeGetCurrentReq(Resource):
-    def get(self):
-        pt = PlayerTime()
-        return pt.players_time_current()
+ def get(self):
+     pt = PlayerTime()
+     return pt.players_time_current()
 
 
 class PlayerStatsReq(Resource):
-    def get(self, player_name):
-        ps = PlayerStats(player_name)
-        return ps.get_user_stats_json()
+ def get(self, player_name):
+     ps = PlayerStats(player_name)
+     return ps.get_user_stats_json()
 
 
 api.add_resource(PlayersTimeHistoricalReq, '/api/players/time/<date>')

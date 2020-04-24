@@ -2,6 +2,8 @@ import ftplib
 import gzip
 import uuid
 
+from scripts.download_ftp_tree import download_ftp_tree
+
 default_connection_settings = {
     'server_name': 'gra-adv4-77.server.pro',
     'server_user': '41873',
@@ -68,6 +70,9 @@ class FtpConnection:
             else:
                 raise
         return files
+
+    def ftp_get_folder(self, source_folder_path, destination_folder_path):
+        download_ftp_tree(self.ftp, source_folder_path, destination_folder_path)
 
 
 def read_gz_text_file(file_path):

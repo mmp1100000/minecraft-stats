@@ -10,7 +10,9 @@ from scripts.utils import FtpConnection, read_gz_text_file
 
 class PlayerTime:
     # Constructor
-
+    """
+    @TODO: Fix current log showing end time as 23:59:59 to show current time or something else
+    """
     def __init__(self):
         pass
 
@@ -23,17 +25,15 @@ class PlayerTime:
                     self.__players_time_df_to_unique_rows(
                         self.__get_players_time_df_historical(date_string, previous)))).to_json()
 
-    def player_times(self, date_string, previous):
+    def player_times(self, previous, date_string):
         return \
             self.__players_time_df_to_delta_df(
                 self.__players_time_df_to_unique_rows(
-                    self.__get_players_time_df_historical(date_string, previous))).to_json()
+                    self.__get_players_time_df_historical(previous, date_string))).to_json()
 
     def players_time_current(self):
         return \
-            self.__players_time_df_to_delta_df(
-                self.__players_time_df_to_unique_rows(
-                    self.__players_time_current())).to_json()
+            self.player_times(0, None)
 
     def get_player_days(self):
         conn = FtpConnection()
@@ -44,7 +44,7 @@ class PlayerTime:
 
     # Private methods
 
-    def __get_players_time_df_historical(self, date_string, previous):
+    def __get_players_time_df_historical(self, previous, *args, **kwargs):
 
         users = []
         start_time = []
@@ -55,16 +55,23 @@ class PlayerTime:
         files_list = conn.ftp_get_dir_files('/logs')
         logpaths = []
         available_days = self.get_player_days()
-        date_index = available_days.index(date_string) + 1
-        for date_string in available_days[date_index - previous:date_index]:
-            logpaths = logpaths + [day for day in files_list if date_string in day]
 
-        print(logpaths)
+        if previous == 0:  # Get only current date logs
+            logpaths = ['latest.log']
+        else:  # Get n previous logs
+            date_index = available_days.index(args[0]) + 1
+            for date_string in available_days[date_index - previous:date_index]:
+                logpaths = logpaths + [day for day in files_list if date_string in day]
 
         for log_file in logpaths:
-            if not os.path.isfile('data/' + log_file):
-                conn.ftp_get_binary_file(log_file, 'data/' + log_file)
-            log = read_gz_text_file('data/' + log_file)
+            if not os.path.isfile('data/logs/' + log_file) or log_file=='latest.log':
+                conn.ftp_get_binary_file(log_file, 'data/logs/' + log_file)
+            if log_file == 'latest.log':
+                with open('data/logs/' + log_file) as f:
+                    log = list(f)
+                log_file = datetime.now().date().isoformat()
+            else:
+                log = read_gz_text_file('data/logs/' + log_file)
             for line in log:
                 entry = line.split(' ')
                 if ('joined the game' in line) or ('logged in' in line):
@@ -99,13 +106,13 @@ class PlayerTime:
             index = time_df[time_df['users'] == user].index.tolist()[-1]
             if time_df.iloc[index]['end_time'] is None:
                 user_close = \
-                {
-                    'users': user,
-                    'start_time': None,
-                    'end_time': datetime.combine(
-                        time_df.iloc[index]['start_time'].date(),
-                        time.fromisoformat('23:59:59'))
-                }
+                    {
+                        'users': user,
+                        'start_time': None,
+                        'end_time': datetime.combine(
+                            time_df.iloc[index]['start_time'].date(),
+                            time.fromisoformat('23:59:59'))
+                    }
                 time_df = time_df.append(user_close, ignore_index=True)
 
         # time_df['start_time'] = pd.to_datetime(time_df['start_time'], format='%H:%M:%S').dt.time
@@ -195,4 +202,5 @@ class PlayerTime:
 
         time_df['start_time'] = pd.to_datetime(time_df['start_time'], format='%H:%M:%S').dt.time
         time_df['end_time'] = pd.to_datetime(time_df['end_time'], format='%H:%M:%S').dt.time
+        print(time_df)
         return time_df

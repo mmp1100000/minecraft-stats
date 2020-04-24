@@ -8,4 +8,4 @@ class PlayerStats:
 
     def get_user_stats_json(self):
         conn = FtpConnection()
-        return conn.ftp_get_json('/MCW1/stats/'+self.uuid+'.json')
+        return conn.ftp_get_json('/Novo%20Mondo/    advancements/'+self.uuid+'.json')
